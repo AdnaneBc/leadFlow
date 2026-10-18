@@ -1,11 +1,14 @@
-import { useState, type SubmitEvent } from "react";
+import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import "./App.css";
 import type { LeadType, LeadUpdates } from "./types/lead";
 import Lead from "./components/Lead";
+import { searchLeads } from "./components/leads-util";
 
 function App() {
   const [leads, setLeads] = useState<LeadType[]>([]);
+  const [query, setQuery] = useState("");
 
+  const currentLeads = searchLeads(leads, query);
   function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -62,6 +65,11 @@ function App() {
       ),
     );
   }
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    setQuery(e.target.value);
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -83,8 +91,17 @@ function App() {
         <button type="submit">Send</button>
       </form>
 
+      <form>
+        <input
+          type="text"
+          name="search"
+          id="search"
+          value={query}
+          onChange={handleChange}
+        />
+      </form>
       <ul>
-        {leads.map((lead) => (
+        {currentLeads.map((lead) => (
           <Lead
             lead={lead}
             key={lead.id}
