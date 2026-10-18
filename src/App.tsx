@@ -91,12 +91,17 @@ function App() {
         <button type="submit">Send</button>
       </form>
 
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <input
           type="text"
           name="search"
           id="search"
           value={query}
+          placeholder="Search"
           onChange={handleChange}
         />
       </form>
