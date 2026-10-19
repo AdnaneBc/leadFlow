@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type SubmitEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 import "./App.css";
 import {
   sampleLeads,
@@ -10,10 +10,23 @@ import Lead from "./components/Lead";
 import { getLeadByStatus, searchLeads } from "./components/leads-util";
 
 function App() {
-  const [leads, setLeads] = useState<LeadType[]>(sampleLeads);
+  const [leads, setLeads] = useState<LeadType[]>((): LeadType[] => {
+    try {
+      const stockedLeads = localStorage.getItem("leads");
+      if (stockedLeads) return JSON.parse(stockedLeads);
+      return sampleLeads;
+    } catch (e) {
+      console.error(e);
+      return sampleLeads;
+    }
+  });
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<leadsFilterByStatus>("tous");
   let currentLeads = searchLeads(leads, query);
+
+  useEffect(() => {
+    localStorage.setItem("leads", JSON.stringify(leads));
+  }, [leads]);
 
   function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
