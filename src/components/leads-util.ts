@@ -1,4 +1,9 @@
-import type { LeadStatus, LeadType, LeadUpdates } from "../types/lead";
+import type {
+  LeadStatus,
+  LeadType,
+  LeadUpdates,
+  leadsFilterByStatus,
+} from "../types/lead";
 
 export function getQualifiedLeads(leads: LeadType[]): LeadType[] {
   // Utiliser filter
@@ -57,6 +62,10 @@ export function updateLead(
   });
 }
 
-export function getLeadByStatus(leads: LeadType[], status: string) {
+export function getLeadByStatus(
+  leads: LeadType[],
+  status: leadsFilterByStatus,
+) {
+  if (status === "tous") return leads;
   return leads.filter((lead) => lead.status === status);
 }

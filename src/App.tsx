@@ -1,14 +1,20 @@
 import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import "./App.css";
-import type { LeadType, LeadUpdates } from "./types/lead";
+import {
+  sampleLeads,
+  type LeadType,
+  type LeadUpdates,
+  type leadsFilterByStatus,
+} from "./types/lead";
 import Lead from "./components/Lead";
 import { getLeadByStatus, searchLeads } from "./components/leads-util";
 
 function App() {
-  const [leads, setLeads] = useState<LeadType[]>([]);
+  const [leads, setLeads] = useState<LeadType[]>(sampleLeads);
   const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<leadsFilterByStatus>("tous");
+  let currentLeads = searchLeads(leads, query);
 
-  const currentLeads = searchLeads(leads, query);
   function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -55,8 +61,9 @@ function App() {
   }
 
   function changeFilterHandler(e: ChangeEvent<HTMLSelectElement>) {
-    getLeadByStatus(currentLeads, e.target.value);
+    setFilter(e.target.value as leadsFilterByStatus);
   }
+  if (filter) currentLeads = getLeadByStatus(currentLeads, filter);
 
   function deleteLead(id: number) {
     setLeads((currentLeads) => currentLeads.filter((lead) => lead.id !== id));
@@ -109,6 +116,7 @@ function App() {
           onChange={handleChange}
         />
         <select name="filter" id="filter" onChange={changeFilterHandler}>
+          <option value="tous">tous</option>
           <option value="new">new</option>
           <option value="contacted">contacted</option>
           <option value="qualified">qualified</option>
