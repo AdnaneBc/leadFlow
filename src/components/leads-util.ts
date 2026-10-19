@@ -56,3 +56,7 @@ export function updateLead(
     return lead;
   });
 }
+
+export function getLeadByStatus(leads: LeadType[], status: string) {
+  return leads.filter((lead) => lead.status === status);
+}

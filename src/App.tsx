@@ -2,7 +2,7 @@ import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import "./App.css";
 import type { LeadType, LeadUpdates } from "./types/lead";
 import Lead from "./components/Lead";
-import { searchLeads } from "./components/leads-util";
+import { getLeadByStatus, searchLeads } from "./components/leads-util";
 
 function App() {
   const [leads, setLeads] = useState<LeadType[]>([]);
@@ -52,6 +52,10 @@ function App() {
     setLeads((leads) => [...leads, newLead]);
 
     e.currentTarget.reset();
+  }
+
+  function changeFilterHandler(e: ChangeEvent<HTMLSelectElement>) {
+    getLeadByStatus(currentLeads, e.target.value);
   }
 
   function deleteLead(id: number) {
@@ -104,6 +108,13 @@ function App() {
           placeholder="Search"
           onChange={handleChange}
         />
+        <select name="filter" id="filter" onChange={changeFilterHandler}>
+          <option value="new">new</option>
+          <option value="contacted">contacted</option>
+          <option value="qualified">qualified</option>
+          <option value="won">won</option>
+          <option value="lost">lost</option>
+        </select>
       </form>
       <ul>
         {currentLeads.map((lead) => (
