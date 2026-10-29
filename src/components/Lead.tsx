@@ -30,22 +30,29 @@ const Lead = ({ lead, onDeleteLead, onUpdateLead }: LeadProps) => {
     setIsEditing(false);
   }
   return (
-    <li>
+    <li className="Card">
       <p>{lead.fullName}</p>
       <p>{lead.email}</p>
       <p>{lead.society}</p>
       <p>{lead.estimatedValue} $</p>
       <p>{lead.status}</p>
 
-      <button onClick={() => onDeleteLead(lead.id)}> Supprimer le lead</button>
-      {lead.status.toLowerCase() !== "contacted" && (
-        <button onClick={() => onUpdateLead(lead.id, { status: "contacted" })}>
-          Marquer comme contacté
+      <div className="buttons">
+        <button onClick={() => onDeleteLead(lead.id)}>
+          {" "}
+          Supprimer le lead
         </button>
-      )}
-      <button type="button" onClick={modifyLead}>
-        {isEditing ? "Annuler" : "Modifier"}
-      </button>
+        {lead.status.toLowerCase() !== "contacted" && (
+          <button
+            onClick={() => onUpdateLead(lead.id, { status: "contacted" })}
+          >
+            Marquer comme contacté
+          </button>
+        )}
+        <button type="button" onClick={modifyLead}>
+          {isEditing ? "Annuler" : "Modifier"}
+        </button>
+      </div>
       {isEditing && (
         <form onSubmit={submitUpdates}>
           <label htmlFor={`fullName-${lead.id}`}>Nom complet</label>

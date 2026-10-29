@@ -95,59 +95,78 @@ function App() {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="fullName">full name</label>
-        <input type="text" name="fullName" id="fullName" />
-        <label htmlFor="email">email</label>
-        <input type="email" name="email" id="email" />
-        <label htmlFor="society">society</label>
-        <input type="text" name="society" id="society" />
-        <label htmlFor="estimatedValue">estimated Value</label>
-        <input type="number" name="estimatedValue" id="estimatedValue" />
-        <select name="status" id="status">
-          <option value="new">new</option>
-          <option value="contacted">contacted</option>
-          <option value="qualified">qualified</option>
-          <option value="won">won</option>
-          <option value="lost">lost</option>
-        </select>
-        <button type="submit">Send</button>
-      </form>
-
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <input
-          type="text"
-          name="search"
-          id="search"
-          value={query}
-          placeholder="Search"
-          onChange={handleChange}
-        />
-        <select name="filter" id="filter" onChange={changeFilterHandler}>
-          <option value="tous">tous</option>
-          <option value="new">new</option>
-          <option value="contacted">contacted</option>
-          <option value="qualified">qualified</option>
-          <option value="won">won</option>
-          <option value="lost">lost</option>
-        </select>
-      </form>
-      <ul>
-        {currentLeads.map((lead) => (
-          <Lead
-            lead={lead}
-            key={lead.id}
-            onDeleteLead={deleteLead}
-            onUpdateLead={updateLead}
+    <main>
+      <h1>LeadFLow</h1>
+      <section id="add-lead">
+        <h2>Ajouter un lead</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="fullName"
+            id="fullName"
+            placeholder="full name"
           />
-        ))}
-      </ul>
-    </>
+          <input type="email" name="email" id="email" placeholder="email" />
+          <input
+            type="text"
+            name="society"
+            id="society"
+            placeholder="society"
+          />
+          <input
+            type="number"
+            name="estimatedValue"
+            id="estimatedValue"
+            placeholder="estimated value"
+          />
+          <select name="status" id="status">
+            <option value="new">new</option>
+            <option value="contacted">contacted</option>
+            <option value="qualified">qualified</option>
+            <option value="won">won</option>
+            <option value="lost">lost</option>
+          </select>
+          <button type="submit">Ajouter un lead</button>
+        </form>
+      </section>
+
+      <section id="search">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <input
+            type="text"
+            name="search"
+            id="search"
+            value={query}
+            placeholder="Search"
+            onChange={handleChange}
+          />
+          <select name="filter" id="filter" onChange={changeFilterHandler}>
+            <option value="tous">tous</option>
+            <option value="new">new</option>
+            <option value="contacted">contacted</option>
+            <option value="qualified">qualified</option>
+            <option value="won">won</option>
+            <option value="lost">lost</option>
+          </select>
+        </form>
+      </section>
+      <section id="leads">
+        <ul>
+          {currentLeads.map((lead) => (
+            <Lead
+              lead={lead}
+              key={lead.id}
+              onDeleteLead={deleteLead}
+              onUpdateLead={updateLead}
+            />
+          ))}
+        </ul>
+      </section>
+    </main>
   );
 }
 
