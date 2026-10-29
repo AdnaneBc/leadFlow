@@ -31,11 +31,16 @@ const Lead = ({ lead, onDeleteLead, onUpdateLead }: LeadProps) => {
   }
   return (
     <li className="Card">
-      <p>{lead.fullName}</p>
+      <p className="fullName">{lead.fullName.toUpperCase()}</p>
       <p>{lead.email}</p>
       <p>{lead.society}</p>
-      <p>{lead.estimatedValue} $</p>
-      <p>{lead.status}</p>
+      <p>
+        {lead.estimatedValue.toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "EUR",
+        })}{" "}
+      </p>
+      <p className={`badge badge-${lead.status}`}>{lead.status}</p>
 
       <div className="buttons">
         <button onClick={() => onDeleteLead(lead.id)}>
