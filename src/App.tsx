@@ -7,6 +7,7 @@ import {
 } from "./types/lead";
 import Lead from "./components/Lead";
 import { getLeadByStatus, searchLeads } from "./components/leads-util";
+import { track } from "./analytics";
 
 function App() {
   const [leads, setLeads] = useState<LeadType[]>((): LeadType[] => {
@@ -68,6 +69,9 @@ function App() {
     };
 
     setLeads((leads) => [...leads, newLead]);
+    track("add_lead", {
+      lead_status: status,
+    });
 
     e.currentTarget.reset();
   }
