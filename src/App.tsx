@@ -105,6 +105,7 @@ function App() {
             name="fullName"
             id="fullName"
             placeholder="full name"
+            aria-label="nom complet"
           />
           <input type="email" name="email" id="email" placeholder="email" />
           <input
@@ -112,14 +113,16 @@ function App() {
             name="society"
             id="society"
             placeholder="society"
+            aria-label="company"
           />
           <input
             type="number"
             name="estimatedValue"
             id="estimatedValue"
             placeholder="estimated value"
+            aria-label="estimated value"
           />
-          <select name="status" id="status">
+          <select name="status" id="status" aria-label="status">
             <option value="new">new</option>
             <option value="contacted">contacted</option>
             <option value="qualified">qualified</option>
@@ -143,8 +146,14 @@ function App() {
             value={query}
             placeholder="Search"
             onChange={handleChange}
+            aria-label="search"
           />
-          <select name="filter" id="filter" onChange={changeFilterHandler}>
+          <select
+            name="filter"
+            id="filter"
+            onChange={changeFilterHandler}
+            aria-label="search-status"
+          >
             <option value="tous">tous</option>
             <option value="new">new</option>
             <option value="contacted">contacted</option>
