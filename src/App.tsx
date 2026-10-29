@@ -107,7 +107,13 @@ function App() {
             placeholder="full name"
             aria-label="nom complet"
           />
-          <input type="email" name="email" id="email" placeholder="email" />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="email"
+            aria-label="email"
+          />
           <input
             type="text"
             name="society"
@@ -146,13 +152,13 @@ function App() {
             value={query}
             placeholder="Search"
             onChange={handleChange}
-            aria-label="search"
+            aria-label="Recherche"
           />
           <select
             name="filter"
             id="filter"
             onChange={changeFilterHandler}
-            aria-label="search-status"
+            aria-label="Filtrer par statut"
           >
             <option value="tous">tous</option>
             <option value="new">new</option>
