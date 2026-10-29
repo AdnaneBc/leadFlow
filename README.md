@@ -1,75 +1,65 @@
-# React + TypeScript + Vite
+# LeadFlow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight lead tracker for freelancers: keep your sales contacts in one place, follow their status, and see who to follow up with.
 
-Currently, two official plugins are available:
+**Live demo:** coming soon
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Add a lead**: full name, email, company, estimated value and status. Required fields are validated, the value must be positive, and duplicate emails are rejected.
+- **Edit a lead**: update name, company and estimated value inline.
+- **Delete a lead** and **mark it as contacted** in one click.
+- **Search** across name, email and company.
+- **Filter by status**: new, contacted, qualified, won, lost. Search and filter combine.
+- **Local persistence**: leads are saved in the browser (`localStorage`) and survive a page reload. Corrupted data is handled without crashing.
+- **Responsive**: mobile-first layout, one column on phones, grid on larger screens.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+- [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) (strict mode)
+- [Vite](https://vite.dev/) for development and build
+- Plain CSS (Flexbox, Grid, media queries)
+- `localStorage` for persistence (no backend)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Requirements: Node.js 20 or later.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+git clone https://github.com/AdnaneBc/leadFlow.git
+cd leadFlow
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Then open the URL shown in the terminal (usually http://localhost:5173).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Other commands:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build   # type-check and build for production
+npm run lint    # run ESLint
+```
+
+## Project structure
 
 ```
+src/
+├── App.tsx                # state, add form, search and filter
+├── App.css                # layout and styles
+├── components/
+│   ├── Lead.tsx           # lead card with edit, delete and status actions
+│   └── leads-util.ts      # pure functions: search, filter, update
+└── types/
+    └── lead.ts            # LeadType, LeadStatus, LeadUpdates
+```
+
+## Roadmap
+
+- Deploy a public demo
+- Usage analytics (tracking plan + event tracking)
+- Backend and user accounts
+
+## Author
+
+Built by [Adnane](https://github.com/AdnaneBc) as part of a full-stack learning path.
