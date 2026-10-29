@@ -39,7 +39,7 @@ select {
 input:focus,
 select:focus {
   outline: none;
-  border: var(--border-focus);
+  border-color: var(--border-focus);
   box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
 }
 
