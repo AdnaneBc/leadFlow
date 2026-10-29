@@ -2,7 +2,7 @@
 
 A lightweight lead tracker for freelancers: keep your sales contacts in one place, follow their status, and see who to follow up with.
 
-**Live demo:** coming soon
+**Live demo:** https://lead-flow-livid.vercel.app/
 
 ## Features
 
