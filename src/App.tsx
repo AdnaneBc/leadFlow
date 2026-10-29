@@ -1,7 +1,6 @@
 import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 import "./App.css";
 import {
-  sampleLeads,
   type LeadType,
   type LeadUpdates,
   type leadsFilterByStatus,
@@ -14,10 +13,10 @@ function App() {
     try {
       const stockedLeads = localStorage.getItem("leads");
       if (stockedLeads) return JSON.parse(stockedLeads);
-      return sampleLeads;
+      return [];
     } catch (e) {
       console.error(e);
-      return sampleLeads;
+      return [];
     }
   });
   const [query, setQuery] = useState("");
