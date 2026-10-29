@@ -155,16 +155,20 @@ function App() {
         </form>
       </section>
       <section id="leads">
-        <ul>
-          {currentLeads.map((lead) => (
-            <Lead
-              lead={lead}
-              key={lead.id}
-              onDeleteLead={deleteLead}
-              onUpdateLead={updateLead}
-            />
-          ))}
-        </ul>
+        {currentLeads.length === 0 ? (
+          <p>Aucun lead trouvé</p>
+        ) : (
+          <ul>
+            {currentLeads.map((lead) => (
+              <Lead
+                lead={lead}
+                key={lead.id}
+                onDeleteLead={deleteLead}
+                onUpdateLead={updateLead}
+              />
+            ))}
+          </ul>
+        )}
       </section>
     </main>
   );

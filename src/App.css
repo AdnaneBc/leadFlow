@@ -65,8 +65,11 @@ form button {
   display: flex;
   justify-content: space-evenly;
   gap: 10px;
-  min-height: 44px;
   flex-wrap: wrap;
+}
+
+.Card .buttons button {
+  min-height: 44px;
 }
 
 .fullName {
