@@ -27,7 +27,16 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("leads", JSON.stringify(leads));
-  }, [leads]);
+    if (query.trim() === "") return;
+
+    const timer = setTimeout(() => {
+      track("search_leads", {
+        query_length: query.length,
+        results_count: searchLeads(leads, query).length,
+      });
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [leads, query]);
 
   function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -78,15 +87,39 @@ function App() {
   }
 
   function changeFilterHandler(e: ChangeEvent<HTMLSelectElement>) {
-    setFilter(e.target.value as leadsFilterByStatus);
+    const value = e.target.value;
+    track("filter_leads", {
+      lead_status: value === "tous" ? "all" : value,
+    });
+    setFilter(value as leadsFilterByStatus);
   }
   if (filter) currentLeads = getLeadByStatus(currentLeads, filter);
 
   function deleteLead(id: number) {
-    setLeads((currentLeads) => currentLeads.filter((lead) => lead.id !== id));
+    const currentLead = leads.find((lead) => lead.id === id);
+    if (currentLead) {
+      track("delete_lead", {
+        lead_status: currentLead.status,
+      });
+      setLeads((currentLeads) => currentLeads.filter((lead) => lead.id !== id));
+    }
   }
 
   function updateLead(id: number, updatedData: LeadUpdates) {
+    if (updatedData.status) {
+      const lead = leads.find((lead) => lead.id === id);
+      if (lead) {
+        track("change_lead_status", {
+          previous_status: lead.status,
+          new_status: updatedData.status,
+        });
+      }
+    } else {
+      track("update_lead", {
+        fields_changed: Object.keys(updatedData).join(","),
+      });
+    }
+
     setLeads((currentLeads) =>
       currentLeads.map((lead) =>
         lead.id === id ? { ...lead, ...updatedData, id: lead.id } : lead,
