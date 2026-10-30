@@ -8,6 +8,7 @@ import {
 import Lead from "./components/Lead";
 import { getLeadByStatus, searchLeads } from "./components/leads-util";
 import { track } from "./analytics";
+import ConsentBanner from "./components/ConsentBanner";
 
 function App() {
   const [leads, setLeads] = useState<LeadType[]>((): LeadType[] => {
@@ -188,6 +189,7 @@ function App() {
           </ul>
         )}
       </section>
+      <ConsentBanner />
     </main>
   );
 }

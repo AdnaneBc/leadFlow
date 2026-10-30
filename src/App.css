@@ -144,4 +144,49 @@ form button {
   #search form input {
     flex: 1;
   }
+  /* À mettre dans ta media query 768px existante */
+  .consent-banner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+  }
+
+  .consent-buttons button {
+    flex: none;
+  }
+}
+
+/* Mobile (par défaut) */
+.consent-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: var(--bg-field);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 12px rgba(16, 24, 40, 0.08);
+  color: var(--text);
+}
+
+.consent-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.consent-buttons button {
+  flex: 1;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-field);
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
 }
