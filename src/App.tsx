@@ -27,8 +27,10 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("leads", JSON.stringify(leads));
-    if (query.trim() === "") return;
+  }, [leads]);
 
+  useEffect(() => {
+    if (query.trim() === "") return;
     const timer = setTimeout(() => {
       track("search_leads", {
         query_length: query.length,
@@ -36,7 +38,7 @@ function App() {
       });
     }, 1000);
     return () => clearTimeout(timer);
-  }, [leads, query]);
+  }, [query, leads]);
 
   function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -56,7 +58,20 @@ function App() {
       !estimatedValue ||
       leads.some((lead) => lead.email.toLowerCase() === email.toLowerCase())
     ) {
-      return;
+      if (!fullName || !email || !society || !formData.get("estimatedValue")) {
+        track("add_lead_failed", { error_reason: "missing_field" });
+        return;
+      }
+      if (!Number.isFinite(estimatedValue) || estimatedValue <= 0) {
+        track("add_lead_failed", { error_reason: "invalid_value" });
+        return;
+      }
+      if (
+        leads.some((lead) => lead.email.toLowerCase() === email.toLowerCase())
+      ) {
+        track("add_lead_failed", { error_reason: "duplicate_email" });
+        return;
+      }
     }
 
     if (
