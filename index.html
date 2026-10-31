@@ -22,7 +22,8 @@
         ad_personalization: "denied",
       });
       gtag("js", new Date());
-      gtag("config", "G-KG9E52XW54");
+      const isDev = location.hostname === "localhost";
+      gtag("config", "G-KG9E52XW54", isDev ? { debug_mode: true } : {});
     </script>
   </head>
   <body>
