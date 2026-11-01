@@ -1,6 +1,8 @@
 import { useState, type SubmitEvent } from "react";
 import type { LeadType, LeadUpdates } from "../types/lead";
 
+
+
 type LeadProps = {
   lead: LeadType;
   onDeleteLead: (id: number) => void;

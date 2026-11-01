@@ -27,6 +27,7 @@ function App() {
       return [];
     }
   });
+  const [errorMsg, setErrorMsg] = useState("");
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<leadsFilterByStatus>("tous");
   let currentLeads = searchLeads(leads, query);
@@ -55,29 +56,22 @@ function App() {
     const estimatedValue = Number(formData.get("estimatedValue"));
     const status = formData.get("status");
 
+    if (!fullName || !email || !society || !formData.get("estimatedValue")) {
+      setErrorMsg("Merci de remplir tous les champs.");
+      track("add_lead_failed", { error_reason: "missing_field" });
+      return;
+    }
+    if (!Number.isFinite(estimatedValue) || estimatedValue <= 0) {
+      setErrorMsg("La valeur doit être supérieure à 0.");
+      track("add_lead_failed", { error_reason: "invalid_value" });
+      return;
+    }
     if (
-      !Number.isFinite(estimatedValue) ||
-      estimatedValue <= 0 ||
-      !fullName ||
-      !email ||
-      !society ||
-      !estimatedValue ||
       leads.some((lead) => lead.email.toLowerCase() === email.toLowerCase())
     ) {
-      if (!fullName || !email || !society || !formData.get("estimatedValue")) {
-        track("add_lead_failed", { error_reason: "missing_field" });
-        return;
-      }
-      if (!Number.isFinite(estimatedValue) || estimatedValue <= 0) {
-        track("add_lead_failed", { error_reason: "invalid_value" });
-        return;
-      }
-      if (
-        leads.some((lead) => lead.email.toLowerCase() === email.toLowerCase())
-      ) {
-        track("add_lead_failed", { error_reason: "duplicate_email" });
-        return;
-      }
+      setErrorMsg("Ce lead existe déjà (email en double).");
+      track("add_lead_failed", { error_reason: "duplicate_email" });
+      return;
     }
 
     if (
@@ -103,6 +97,7 @@ function App() {
     track("add_lead", {
       lead_status: status,
     });
+    setErrorMsg("");
 
     e.currentTarget.reset();
   }
@@ -142,7 +137,6 @@ function App() {
         })
         .map((key) => FIELD_NAMES[key] ?? key);
       if (fieldNames.length > 0) {
-        // ton track update_lead ici
         track("update_lead", {
           fields_changed: fieldNames.join(","),
         });
@@ -203,6 +197,7 @@ function App() {
           </select>
           <button type="submit">Ajouter un lead</button>
         </form>
+        {errorMsg && <div className="error-message">{errorMsg}</div>}
       </section>
 
       <section id="search">
