@@ -156,7 +156,7 @@ function App() {
 
   return (
     <main>
-      <h1>LeadFLow</h1>
+      <h1>LeadFlow</h1>
       <section id="add-lead">
         <h2>Ajouter un lead</h2>
         <form onSubmit={handleSubmit}>
@@ -165,30 +165,30 @@ function App() {
             name="fullName"
             id="fullName"
             placeholder="full name"
-            aria-label="nom complet"
+            aria-label="Nom complet"
           />
           <input
             type="email"
             name="email"
             id="email"
             placeholder="email"
-            aria-label="email"
+            aria-label="Email"
           />
           <input
             type="text"
             name="society"
             id="society"
             placeholder="society"
-            aria-label="company"
+            aria-label="Entreprise"
           />
           <input
             type="number"
             name="estimatedValue"
             id="estimatedValue"
             placeholder="estimated value"
-            aria-label="estimated value"
+            aria-label="Valeur estimée"
           />
-          <select name="status" id="status" aria-label="status">
+          <select name="status" id="status" aria-label="Statut">
             <option value="new">new</option>
             <option value="contacted">contacted</option>
             <option value="qualified">qualified</option>
@@ -197,7 +197,11 @@ function App() {
           </select>
           <button type="submit">Ajouter un lead</button>
         </form>
-        {errorMsg && <div className="error-message">{errorMsg}</div>}
+        {errorMsg && (
+          <div className="error-message" role="alert">
+            {errorMsg}
+          </div>
+        )}
       </section>
 
       <section id="search">
