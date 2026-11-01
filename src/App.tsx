@@ -10,6 +10,12 @@ import { getLeadByStatus, searchLeads } from "./components/leads-util";
 import { track } from "./analytics";
 import ConsentBanner from "./components/ConsentBanner";
 
+const FIELD_NAMES: Record<string, string> = {
+  fullName: "full_name",
+  society: "company",
+  estimatedValue: "estimated_value",
+};
+
 function App() {
   const [leads, setLeads] = useState<LeadType[]>((): LeadType[] => {
     try {
@@ -121,18 +127,26 @@ function App() {
   }
 
   function updateLead(id: number, updatedData: LeadUpdates) {
+    const lead = leads.find((lead) => lead.id === id);
+    if (!lead) return;
     if (updatedData.status) {
-      const lead = leads.find((lead) => lead.id === id);
-      if (lead) {
-        track("change_lead_status", {
-          previous_status: lead.status,
-          new_status: updatedData.status,
+      track("change_lead_status", {
+        previous_status: lead.status,
+        new_status: updatedData.status,
+      });
+    } else {
+      const fieldNames = Object.keys(updatedData)
+        .filter((key) => {
+          const k = key as keyof LeadUpdates;
+          return updatedData[k] !== lead[k];
+        })
+        .map((key) => FIELD_NAMES[key] ?? key);
+      if (fieldNames.length > 0) {
+        // ton track update_lead ici
+        track("update_lead", {
+          fields_changed: fieldNames.join(","),
         });
       }
-    } else {
-      track("update_lead", {
-        fields_changed: Object.keys(updatedData).join(","),
-      });
     }
 
     setLeads((currentLeads) =>

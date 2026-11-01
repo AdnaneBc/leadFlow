@@ -19,15 +19,15 @@
 
 | Événement            | Paramètres (valeurs)                                           | Déclencheur                     | Question servie | Statut      |
 | -------------------- | -------------------------------------------------------------- | ------------------------------- | --------------- | ----------- |
-| `add_lead`           | `lead_status` (new, contacted, qualified, won, lost)           | lead ajouté à la liste          | Activation      | implémenté  |
-| `add_lead_failed`    | `error_reason` (missing_field, invalid_value, duplicate_email) | ajout refusé                    | Friction        | implémenté  |
-| `update_lead`        | `fields_changed` (full_name, company, estimated_value)         | modification sauvegardée        | Valeur          | écart (1)   |
-| `delete_lead`        | `lead_status` (mêmes valeurs)                                  | lead supprimé                   | Valeur          | implémenté  |
-| `change_lead_status` | `previous_status`, `new_status` (mêmes valeurs)                | clic sur Marquer comme contacté | Valeur          | implémenté  |
-| `search_leads`       | `query_length`, `results_count` (nombres)                      | 1 s après la dernière frappe    | Usage recherche | implémenté  |
-| `filter_leads`       | `lead_status` (all, new, contacted, qualified, won, lost)      | changement du filtre            | Usage filtre    | implémenté  |
+| `add_lead`           | `lead_status` (new, contacted, qualified, won, lost)           | lead ajouté à la liste          | Activation      | validé      |
+| `add_lead_failed`    | `error_reason` (missing_field, invalid_value, duplicate_email) | ajout refusé                    | Friction        | validé      |
+| `update_lead`        | `fields_changed` (full_name, company, estimated_value)         | modification sauvegardée        | Valeur          | validé      |
+| `delete_lead`        | `lead_status` (mêmes valeurs)                                  | lead supprimé                   | Valeur          | validé      |
+| `change_lead_status` | `previous_status`, `new_status` (mêmes valeurs)                | clic sur Marquer comme contacté | Valeur          | validé      |
+| `search_leads`       | `query_length`, `results_count` (nombres)                      | 1 s après la dernière frappe    | Usage recherche | validé      |
+| `filter_leads`       | `lead_status` (all, new, contacted, qualified, won, lost)      | changement du filtre            | Usage filtre    | validé      |
 
-(1) Le code envoie aujourd'hui les noms de clés JavaScript (`fullName`, `society`, `estimatedValue`) au lieu des valeurs du plan. À corriger dans le code (ticket F1).
+`fields_changed` ne liste que les champs dont la valeur a réellement changé ; rien n'est envoyé si aucun champ ne change.
 
 Statuts : à faire → implémenté (code poussé) → validé (recette DebugView OK).
 
@@ -54,13 +54,13 @@ Déclarées dans GA4 (Admin, Définitions personnalisées) : `lead_status` le 20
 
 Pour chaque événement, dans DebugView :
 
-- [ ] Il part au bon moment (après succès, pas à la tentative)
-- [ ] Il part une seule fois (pas de doublon)
-- [ ] Le nom est exactement celui du plan
-- [ ] Chaque paramètre est présent, avec une valeur de la liste prévue
-- [ ] Aucune donnée personnelle dans la requête (onglet Réseau, filtre « collect »)
-- [ ] Il ne part pas tant que le consentement est refusé
-- [ ] Il apparaît dans DebugView (capture jointe)
+- [x] Il part au bon moment (après succès, pas à la tentative)
+- [x] Il part une seule fois (pas de doublon)
+- [x] Le nom est exactement celui du plan
+- [x] Chaque paramètre est présent, avec une valeur de la liste prévue
+- [x] Aucune donnée personnelle dans la requête (onglet Réseau, filtre « collect »)
+- [x] Il ne part pas tant que le consentement est refusé
+- [x] Il apparaît dans DebugView (capture jointe)
 
 Quand tout est coché, passer le statut de l'événement à « validé » dans la section 3.
 
@@ -72,3 +72,5 @@ Quand tout est coché, passer le statut de l'événement à « validé » dans l
 | 2026-10-29 | Propriété GA4 et `add_lead` en production | Premier événement |
 | 2026-10-30 | Bannière de consentement (Consent Mode) | Conformité : rien n'est mesuré avant accord |
 | 2026-10-31 | 7 événements implémentés, 6 définitions personnalisées, filtre trafic développeur | Plan complet ; exclure les tests des rapports |
+| 2026-10-31 | Recette DebugView : 6 événements validés, `update_lead` en écart | Preuve avant validation |
+| 2026-11-01 | `update_lead` corrigé (noms du plan, seulement les champs modifiés) et validé | 7/7 événements validés |
