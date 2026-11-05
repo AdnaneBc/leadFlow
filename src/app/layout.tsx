@@ -3,5 +3,37 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return "...";
+  return 
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>leadflow</title>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-KG9E52XW54"
+    ></script>
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        analytics_storage: "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+      });
+      gtag("js", new Date());
+      const isDev = location.hostname === "localhost";
+      gtag("config", "G-KG9E52XW54", isDev ? { debug_mode: true } : {});
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
 }
