@@ -1,21 +1,24 @@
+import type { Metadata } from "next";
+import Script from "next/script";
+export const metadata: Metadata = {
+  title: "LeadFlow",
+};
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return 
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>leadflow</title>
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-KG9E52XW54"
-    ></script>
+  return (
+    <html lang="fr">
+      <body>
+        {children}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-KG9E52XW54"
+          strategy="afterInteractive"
+        ></Script>
 
-    <script>
+        <Script id="ga4-consent" strategy="beforeInteractive">
+          {`
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
@@ -28,12 +31,9 @@ export default function RootLayout({
       });
       gtag("js", new Date());
       const isDev = location.hostname === "localhost";
-      gtag("config", "G-KG9E52XW54", isDev ? { debug_mode: true } : {});
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+      gtag("config", "G-KG9E52XW54", isDev ? { debug_mode: true } : {});`}
+        </Script>
+      </body>
+    </html>
+  );
 }
