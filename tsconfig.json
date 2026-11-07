@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2023",
-    "lib": [
-      "ES2023",
-      "DOM"
-    ],
+    "lib": ["ES2023", "DOM"],
     "module": "esnext",
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
@@ -29,7 +26,7 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "strict": false,
+    "strict": true,
     "resolveJsonModule": true
   },
   "include": [
@@ -41,7 +38,5 @@
     "dist/types/**/*.ts",
     "dist/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "./node_modules"
-  ]
+  "exclude": ["./node_modules"]
 }
