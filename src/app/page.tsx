@@ -1,7 +1,9 @@
+import LeadFlowClient from "./LeadFlowClient";
+
 export default function page() {
   return (
     <div>
-      <h1>Test</h1>
+      <LeadFlowClient />
     </div>
   );
 }

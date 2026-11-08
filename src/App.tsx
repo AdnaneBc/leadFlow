@@ -1,5 +1,4 @@
 import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
-import "./App.css";
 import {
   type LeadType,
   type LeadUpdates,
