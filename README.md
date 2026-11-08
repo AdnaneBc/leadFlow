@@ -17,7 +17,7 @@ A lightweight lead tracker for freelancers: keep your sales contacts in one plac
 ## Tech stack
 
 - [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) (strict mode)
-- [Vite](https://vite.dev/) for development and build
+- [NextJS](https://nextjs.org/) for development and build
 - Plain CSS (Flexbox, Grid, media queries)
 - `localStorage` for persistence (no backend)
 
