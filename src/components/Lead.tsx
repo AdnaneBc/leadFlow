@@ -1,7 +1,6 @@
 import { useState, type SubmitEvent } from "react";
 import type { LeadType, LeadUpdates } from "../types/lead";
-
-
+import Button from "./ui/Button";
 
 type LeadProps = {
   lead: LeadType;
@@ -56,9 +55,11 @@ const Lead = ({ lead, onDeleteLead, onUpdateLead }: LeadProps) => {
             Marquer comme contacté
           </button>
         )}
-        <button type="button" onClick={modifyLead}>
-          {isEditing ? "Annuler" : "Modifier"}
-        </button>
+        <Button
+          type="button"
+          onClick={modifyLead}
+          text={isEditing ? "Annuler" : "Modifier"}
+        />
       </div>
       {isEditing && (
         <form onSubmit={submitUpdates}>
