@@ -8,6 +8,11 @@ import Lead from "./components/Lead";
 import { getLeadByStatus, searchLeads } from "./components/leads-util";
 import { track } from "./analytics";
 import ConsentBanner from "./components/ConsentBanner";
+import Input from "./components/ui/Input";
+import Select from "./components/ui/Select";
+import Button from "./components/ui/Button";
+
+const SELECT_OPTIONS = ["new", "contacted", "qualified", "won", "lost"];
 
 const FIELD_NAMES: Record<string, string> = {
   fullName: "full_name",
@@ -159,42 +164,43 @@ function App() {
       <section id="add-lead">
         <h2>Ajouter un lead</h2>
         <form onSubmit={handleSubmit}>
-          <input
+          <Input
             type="text"
             name="fullName"
             id="fullName"
             placeholder="full name"
-            aria-label="Nom complet"
+            text="Nom complet"
           />
-          <input
+          <Input
             type="email"
             name="email"
             id="email"
             placeholder="email"
-            aria-label="Email"
+            text="Email"
           />
-          <input
+          <Input
             type="text"
             name="society"
             id="society"
             placeholder="society"
-            aria-label="Entreprise"
+            text="Entreprise"
           />
-          <input
+
+          <Input
             type="number"
             name="estimatedValue"
             id="estimatedValue"
             placeholder="estimated value"
-            aria-label="Valeur estimée"
+            text="Valeur estimée"
           />
-          <select name="status" id="status" aria-label="Statut">
-            <option value="new">new</option>
-            <option value="contacted">contacted</option>
-            <option value="qualified">qualified</option>
-            <option value="won">won</option>
-            <option value="lost">lost</option>
-          </select>
-          <button type="submit">Ajouter un lead</button>
+
+          <Select
+            name="status"
+            id="status"
+            options={SELECT_OPTIONS}
+            text="statut"
+          />
+          <Button type="submit" text="Ajouter un lead" />
         </form>
         {errorMsg && (
           <div className="error-message" role="alert">
@@ -203,13 +209,13 @@ function App() {
         )}
       </section>
 
-      <section id="search">
+      <section id="searchSection">
         <form
           onSubmit={(e) => {
             e.preventDefault();
           }}
         >
-          <input
+          <Input
             type="text"
             name="search"
             id="search"
@@ -218,19 +224,14 @@ function App() {
             onChange={handleChange}
             aria-label="Recherche"
           />
-          <select
+          <Select
             name="filter"
+            options={["tous", ...SELECT_OPTIONS]}
             id="filter"
+            value={filter}
             onChange={changeFilterHandler}
             aria-label="Filtrer par statut"
-          >
-            <option value="tous">tous</option>
-            <option value="new">new</option>
-            <option value="contacted">contacted</option>
-            <option value="qualified">qualified</option>
-            <option value="won">won</option>
-            <option value="lost">lost</option>
-          </select>
+          />
         </form>
       </section>
       <section id="leads">
