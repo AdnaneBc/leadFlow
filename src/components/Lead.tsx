@@ -2,6 +2,7 @@ import { useState, type SubmitEvent } from "react";
 import type { LeadType, LeadUpdates } from "../types/lead";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
+import StatusBadge from "./ui/StatusBadge";
 
 type LeadProps = {
   lead: LeadType;
@@ -42,8 +43,7 @@ const Lead = ({ lead, onDeleteLead, onUpdateLead }: LeadProps) => {
           currency: "EUR",
         })}{" "}
       </p>
-      <p className={`badge badge-${lead.status}`}>{lead.status}</p>
-
+      <StatusBadge leadStatus={lead.status} />
       <div className="buttons">
         <Button
           variante="danger"
