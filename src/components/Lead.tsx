@@ -1,7 +1,8 @@
 import { useState, type SubmitEvent } from "react";
 import type { LeadType, LeadUpdates } from "../types/lead";
-
-
+import Button from "./ui/Button";
+import Input from "./ui/Input";
+import StatusBadge from "./ui/StatusBadge";
 
 type LeadProps = {
   lead: LeadType;
@@ -42,49 +43,54 @@ const Lead = ({ lead, onDeleteLead, onUpdateLead }: LeadProps) => {
           currency: "EUR",
         })}{" "}
       </p>
-      <p className={`badge badge-${lead.status}`}>{lead.status}</p>
-
+      <StatusBadge leadStatus={lead.status} />
       <div className="buttons">
-        <button onClick={() => onDeleteLead(lead.id)}>
-          {" "}
-          Supprimer le lead
-        </button>
+        <Button
+          variante="danger"
+          onClick={() => onDeleteLead(lead.id)}
+          text="Supprimer le lead"
+        />
+
         {lead.status.toLowerCase() !== "contacted" && (
-          <button
+          <Button
             onClick={() => onUpdateLead(lead.id, { status: "contacted" })}
-          >
-            Marquer comme contacté
-          </button>
+            text="Marquer comme contacté"
+          />
         )}
-        <button type="button" onClick={modifyLead}>
-          {isEditing ? "Annuler" : "Modifier"}
-        </button>
+        <Button
+          type="button"
+          onClick={modifyLead}
+          text={isEditing ? "Annuler" : "Modifier"}
+        />
       </div>
       {isEditing && (
         <form onSubmit={submitUpdates}>
-          <label htmlFor={`fullName-${lead.id}`}>Nom complet</label>
-          <input
-            id={`fullName-${lead.id}`}
+          <Input
+            type="text"
             name="fullName"
+            text="Nom complet"
             defaultValue={lead.fullName}
+            id={`fullName-${lead.id}`}
           />
-          <label htmlFor={`society-${lead.id}`}>Entreprise</label>
-          <input
+
+          <Input
             type="text"
             id={`society-${lead.id}`}
             name="society"
             defaultValue={lead.society}
+            text="Entreprise"
           />
 
-          <label htmlFor={`estimatedValue-${lead.id}`}>Valeur estimée</label>
-          <input
+          <Input
             type="number"
             id={`estimatedValue-${lead.id}`}
             name="estimatedValue"
             defaultValue={lead.estimatedValue}
+            text="Valeur estimée"
             step="any"
           />
-          <button type="submit">Enregistrer</button>
+
+          <Button type="submit" text="Enregistrer" />
         </form>
       )}
     </li>

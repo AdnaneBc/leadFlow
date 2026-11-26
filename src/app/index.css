@@ -134,14 +134,14 @@ form button {
     gap: 10px;
   }
 
-  #search form {
+  #searchSection form {
     display: flex;
     gap: 10px;
   }
-  #search form select {
+  #searchSectionn form select {
     width: auto;
   }
-  #search form input {
+  #searchSectionn form input {
     flex: 1;
   }
   /* À mettre dans ta media query 768px existante */
