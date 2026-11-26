@@ -16,7 +16,7 @@ export default function Button({
   variante = "principal",
   text,
   onClick,
-  type,
+  type = "button",
 }: ButtonProps) {
   return (
     <button type={type} className={variante} onClick={onClick}>
